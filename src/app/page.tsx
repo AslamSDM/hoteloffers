@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -37,6 +36,7 @@ export default function Home() {
   const searchParams = useSearchParams()
 
   useEffect(() => {
+    console.log('searchParams:', searchParams.toString())
     const fetchData = async () => {
       setIsLoading(true)
       try {

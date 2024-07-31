@@ -7,9 +7,6 @@ import { ObjectId } from 'mongodb';
 
 const API_ENDPOINT = 'http://testapi.swisshalley.com/hotels/'
 const API_KEY = process.env.API_KEY
-function isValidObjectId(id: string): boolean {
-  return /^[0-9a-fA-F]{24}$/.test(id);
-}
 export async function GET(request: NextRequest) {
   await dbConnect()
 
@@ -19,25 +16,22 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get('sort')
   const country = searchParams.get('country')
   const city = searchParams.get('city')
-
   try {
-    let hotels = await Hotel.find({})
+    let hotels = await Hotel.find({
+      createdAt: { $gte: new Date(Date.now() - 20 * 60 * 1000) } // Filter out documents older than 20 minutes
+    })    
     if (hotels.length === 0) {
       const response = await axios.get(API_ENDPOINT, {
         headers: { 'x-api-key': API_KEY }
       })
       if (response.data.data && Array.isArray(response.data.data.hotels)) {
-        console.log(response.data.data.hotels)
         const processedHotels = processHotels(response.data.data.hotels)
-        // console.log(processedHotels)
         await Hotel.insertMany(processedHotels)
         hotels = processedHotels
       } else {
         throw new Error('Invalid data format from API')
       }
     }
-
-
   
     const skip = (page - 1) * limit
   
@@ -67,14 +61,15 @@ export async function GET(request: NextRequest) {
       default:
         query = query.sort('price') // Default sort
     }
-    const totalHotels = hotels.length;
+    const queryresult = await query.find()
+    const totalHotels = queryresult.length;
     const totalPages = Math.ceil(totalHotels / limit);
     // Apply pagination
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
-    hotels = hotels.slice(startIndex, endIndex)
+    hotels = queryresult.slice(startIndex, endIndex)
 
-    return new Response(JSON.stringify({hotels:hotels,totalPages:totalPages}), {
+    return new Response(JSON.stringify({hotels:queryresult,totalPages:totalPages}), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'

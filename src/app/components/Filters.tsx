@@ -1,4 +1,3 @@
-// app/components/Filters.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -23,6 +22,9 @@ export default function Filters({ countries, cities }: FiltersProps) {
     setCity(searchParams.get('city') || '')
     setSortBy(searchParams.get('sort') || '')
   }, [searchParams])
+  console.log('countries:', country)
+  console.log('cities:', city)
+  console.log('sortBy:', sortBy)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

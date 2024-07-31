@@ -47,7 +47,7 @@ export default function Home() {
         console.log('hotelsData:', hotelsData)
         setHotels(hotelsData.hotels)
         setTotalPages(hotelsData.totalPages)
-        setCurrentPage(hotelsData.currentPage)
+        setCurrentPage(searchParams.get('page') ? Number(searchParams.get('page')) : 1)
         setCountries(locationsData.countries)
         setCities(locationsData.cities)
       } catch (error) {
@@ -62,6 +62,7 @@ export default function Home() {
   const handlePageChange = (page: number) => {
     const newSearchParams = new URLSearchParams(searchParams)
     newSearchParams.set('page', page.toString())
+    setCurrentPage(page)
     router.push(`/?${newSearchParams.toString()}`)
   }
 

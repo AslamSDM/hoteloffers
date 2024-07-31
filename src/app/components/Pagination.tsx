@@ -8,6 +8,8 @@ interface PaginationProps {
 }
 
 export default function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
+  console.log('totalPages:', totalPages)
+  console.log('currentPage:', currentPage)
   return (
     <div className={styles.pagination}>
       <button 

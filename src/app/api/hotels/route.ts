@@ -36,7 +36,6 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
   
     let query = Hotel.find()
-  
     if (country) {
       query = query.where('country', country)
     }
@@ -69,7 +68,7 @@ export async function GET(request: NextRequest) {
     const endIndex = page * limit
     hotels = queryresult.slice(startIndex, endIndex)
 
-    return new Response(JSON.stringify({hotels:queryresult,totalPages:totalPages}), {
+    return new Response(JSON.stringify({hotels:hotels,totalPages:totalPages}), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'

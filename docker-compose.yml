@@ -8,6 +8,18 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - API_KEY=${API_KEY}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    depends_on:
+      - mongo
 
 volumes:
   mongodb_data:

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import HotelList from './components/HotelList'
-import Filters from './components/Filters'
-import Pagination from './components/Pagination'
+import HotelList from '../components/HotelList'
+import Filters from '../components/Filters'
+import Pagination from '../components/Pagination'
 import { HotelsResponse, IHotel, LocationsResponse } from '../types'
 import styles from './page.module.css'
 

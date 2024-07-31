@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import { IHotel } from '../../types'
+import { IHotel } from '../types'
 import styles from './HotelItem.module.css'
 
 import { useState } from 'react'

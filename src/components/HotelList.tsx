@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import HotelItem from './HotelItem'
-import { IHotel } from '../../types'
+import { IHotel } from '../types'
 import styles from './HotelList.module.css'
 
 interface HotelListProps {

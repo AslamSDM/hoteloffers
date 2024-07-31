@@ -40,10 +40,12 @@ export default function Home() {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const [hotelsData, locationsData] = await Promise.all([
-          getHotels(searchParams),
-          getLocations()
-        ])
+        // const [hotelsData, locationsData] = await Promise.all([
+        //   getHotels(searchParams),
+        //   getLocations()
+        // ])
+        const hotelsData = await getHotels(searchParams)
+        const locationsData = await getLocations()
         console.log('hotelsData:', hotelsData)
         setHotels(hotelsData.hotels)
         setTotalPages(hotelsData.totalPages)
